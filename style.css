@@ -1,0 +1,544 @@
+/* ============================================
+   KANE RESTAURO — Profile Website
+   Navy Blue & Gold Theme
+   ============================================ */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Navy Blue Palette */
+    --navy-900: #0a0e27;
+    --navy-800: #0d1333;
+    --navy-700: #111940;
+    --navy-600: #161f4d;
+    --navy-500: #1b2559;
+    --navy-400: #2a3470;
+    --navy-300: #3d4a8a;
+
+    /* Gold Palette */
+    --gold-50: #fff9e6;
+    --gold-100: #fef0c3;
+    --gold-200: #fde48a;
+    --gold-300: #fcd34d;
+    --gold-400: #f5b829;
+    --gold-500: #d4a017;
+    --gold-600: #b8860b;
+    --gold-700: #9a6f0a;
+
+    /* Accent & Utility */
+    --white: #ffffff;
+    --white-soft: rgba(255, 255, 255, 0.9);
+    --white-muted: rgba(255, 255, 255, 0.6);
+    --glass-bg: rgba(13, 19, 51, 0.65);
+    --glass-border: rgba(212, 160, 23, 0.2);
+
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, var(--gold-400), var(--gold-600), var(--gold-400));
+    --gradient-navy: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-700) 50%, var(--navy-800) 100%);
+    --gradient-card: linear-gradient(170deg, rgba(22, 31, 77, 0.8) 0%, rgba(10, 14, 39, 0.95) 100%);
+
+    /* Spacing & Sizing */
+    --card-max-width: 440px;
+    --card-radius: 28px;
+    --btn-radius: 16px;
+    --photo-size: 150px;
+
+    /* Shadows */
+    --shadow-card: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 80px rgba(212, 160, 23, 0.08);
+    --shadow-btn: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-btn-hover: 0 8px 30px rgba(212, 160, 23, 0.25);
+    --shadow-photo: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+    /* Transitions */
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--gradient-navy);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- Background Particles --- */
+.bg-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gold-400), transparent);
+    opacity: 0;
+    animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+    }
+}
+
+/* --- Floating Gold Orbs --- */
+.gold-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.orb-1 {
+    width: 300px;
+    height: 300px;
+    background: rgba(212, 160, 23, 0.08);
+    top: -80px;
+    right: -100px;
+    animation: orbFloat1 8s var(--ease-smooth) infinite;
+}
+
+.orb-2 {
+    width: 200px;
+    height: 200px;
+    background: rgba(245, 184, 41, 0.06);
+    bottom: -50px;
+    left: -60px;
+    animation: orbFloat2 10s var(--ease-smooth) infinite;
+}
+
+.orb-3 {
+    width: 150px;
+    height: 150px;
+    background: rgba(184, 134, 11, 0.05);
+    top: 50%;
+    left: 50%;
+    animation: orbFloat3 12s var(--ease-smooth) infinite;
+}
+
+@keyframes orbFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 40px) scale(1.1); }
+}
+@keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.15); }
+}
+@keyframes orbFloat3 {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-40%, -60%) scale(1.2); }
+}
+
+/* --- Profile Card --- */
+.profile-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--card-max-width);
+    background: var(--gradient-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-card);
+    padding: 50px 32px 36px;
+    text-align: center;
+    overflow: hidden;
+    animation: cardEnter 0.8s var(--ease-bounce) forwards;
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+}
+
+@keyframes cardEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Card top accent line */
+.card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-gold);
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+
+/* --- Profile Photo --- */
+.profile-photo-wrapper {
+    position: relative;
+    width: var(--photo-size);
+    height: var(--photo-size);
+    margin: 0 auto 28px;
+    animation: photoEnter 1s var(--ease-bounce) 0.3s forwards;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+@keyframes photoEnter {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    border: 3px solid var(--gold-500);
+    box-shadow: var(--shadow-photo);
+    transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth);
+}
+
+.profile-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 160, 23, 0.3);
+}
+
+/* Animated ring around photo */
+.photo-ring {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--gold-400);
+    border-right-color: var(--gold-500);
+    animation: ringRotate 3s linear infinite;
+    z-index: 1;
+}
+
+.photo-ring-inner {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    border-bottom-color: var(--gold-300);
+    border-left-color: var(--gold-600);
+    animation: ringRotate 2s linear infinite reverse;
+}
+
+@keyframes ringRotate {
+    to { transform: rotate(360deg); }
+}
+
+/* Glow behind photo */
+.photo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 160, 23, 0.15) 0%, transparent 70%);
+    z-index: 0;
+    animation: glowPulse 3s var(--ease-smooth) infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* --- Name & Tagline --- */
+.profile-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    animation: nameEnter 0.8s var(--ease-smooth) 0.5s forwards;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+@keyframes nameEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-tagline {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--white-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: nameEnter 0.8s var(--ease-smooth) 0.6s forwards;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+/* --- Divider --- */
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 28px 0;
+    position: relative;
+    animation: nameEnter 0.8s var(--ease-smooth) 0.7s forwards;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-600), transparent);
+}
+
+.divider-diamond {
+    width: 8px;
+    height: 8px;
+    background: var(--gold-500);
+    transform: rotate(45deg);
+    margin: 0 16px;
+    flex-shrink: 0;
+}
+
+/* --- Social Link Buttons --- */
+.links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.link-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 160, 23, 0.12);
+    border-radius: var(--btn-radius);
+    color: var(--white-soft);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s var(--ease-smooth);
+    box-shadow: var(--shadow-btn);
+    animation: btnEnter 0.6s var(--ease-bounce) forwards;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.link-btn:nth-child(1) { animation-delay: 0.8s; }
+.link-btn:nth-child(2) { animation-delay: 0.9s; }
+.link-btn:nth-child(3) { animation-delay: 1.0s; }
+.link-btn:nth-child(4) { animation-delay: 1.1s; }
+
+@keyframes btnEnter {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Button shimmer effect */
+.link-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.08), transparent);
+    transition: left 0.5s var(--ease-smooth);
+}
+
+.link-btn:hover::before {
+    left: 100%;
+}
+
+.link-btn:hover {
+    background: rgba(212, 160, 23, 0.1);
+    border-color: rgba(212, 160, 23, 0.35);
+    box-shadow: var(--shadow-btn-hover);
+    transform: translateY(-2px);
+}
+
+.link-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-btn);
+}
+
+/* Icon container */
+.link-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(212, 160, 23, 0.15), rgba(184, 134, 11, 0.08));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold-400);
+    transition: all 0.35s var(--ease-smooth);
+}
+
+.link-btn:hover .link-icon {
+    background: linear-gradient(135deg, rgba(212, 160, 23, 0.25), rgba(184, 134, 11, 0.15));
+    color: var(--gold-300);
+    transform: scale(1.08);
+}
+
+.link-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.link-text {
+    flex: 1;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+.link-arrow {
+    font-size: 1.2rem;
+    color: var(--gold-500);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.35s var(--ease-smooth);
+}
+
+.link-btn:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- Footer --- */
+.card-footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(212, 160, 23, 0.1);
+    animation: nameEnter 0.8s var(--ease-smooth) 1.2s forwards;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.card-footer p {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gold-600);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    body {
+        padding: 24px 16px;
+    }
+
+    .profile-card {
+        padding: 40px 24px 28px;
+        border-radius: 22px;
+    }
+
+    :root {
+        --photo-size: 120px;
+    }
+
+    .profile-name {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+
+    .link-btn {
+        padding: 14px 16px;
+        gap: 12px;
+        font-size: 0.9rem;
+    }
+
+    .link-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .link-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 360px) {
+    .profile-card {
+        padding: 32px 18px 24px;
+    }
+
+    .profile-name {
+        font-size: 1.2rem;
+    }
+
+    .link-btn {
+        padding: 12px 14px;
+        gap: 10px;
+        font-size: 0.85rem;
+        border-radius: 12px;
+    }
+}
+
+/* --- Accessibility: Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
