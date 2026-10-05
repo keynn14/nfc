@@ -1,6 +1,6 @@
 /* ============================================
    KANE RESTAURO — Profile Website
-   Navy Blue & Gold Theme
+   Navy Blue & Gold Theme + Swinging ID Card
    ============================================ */
 
 /* --- Reset & Base --- */
@@ -66,12 +66,8 @@ html {
 
 body {
     font-family: 'Outfit', sans-serif;
-    background: var(--gradient-navy);
+    background: var(--navy-900);
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
     overflow-x: hidden;
     position: relative;
 }
@@ -101,12 +97,8 @@ body {
         transform: translateY(100vh) scale(0);
         opacity: 0;
     }
-    10% {
-        opacity: 0.6;
-    }
-    90% {
-        opacity: 0.3;
-    }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
     100% {
         transform: translateY(-10vh) scale(1);
         opacity: 0;
@@ -160,6 +152,339 @@ body {
 @keyframes orbFloat3 {
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
     50% { transform: translate(-40%, -60%) scale(1.2); }
+}
+
+
+/* ============================================
+   HERO SECTION — Swinging ID Card
+   ============================================ */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0;
+    overflow: hidden;
+    z-index: 1;
+    background: linear-gradient(180deg,
+        var(--navy-900) 0%,
+        var(--navy-800) 40%,
+        var(--navy-700) 100%
+    );
+}
+
+/* --- Parallax Background Stars --- */
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.parallax-star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold-400);
+}
+
+.star-1 { width: 3px; height: 3px; top: 10%; left: 15%; opacity: 0.4; }
+.star-2 { width: 2px; height: 2px; top: 25%; left: 80%; opacity: 0.3; }
+.star-3 { width: 4px; height: 4px; top: 40%; left: 60%; opacity: 0.2; }
+.star-4 { width: 2px; height: 2px; top: 55%; left: 30%; opacity: 0.35; }
+.star-5 { width: 3px; height: 3px; top: 70%; left: 75%; opacity: 0.25; }
+.star-6 { width: 2px; height: 2px; top: 15%; left: 50%; opacity: 0.3; }
+.star-7 { width: 3px; height: 3px; top: 60%; left: 10%; opacity: 0.2; }
+.star-8 { width: 2px; height: 2px; top: 35%; left: 90%; opacity: 0.35; }
+
+/* --- Lanyard Assembly (contains string + clip + card) --- */
+.lanyard-assembly {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    /* transform-origin at top center — where the lanyard attaches to the "ceiling" */
+    transform-origin: top center;
+    perspective: 800px;
+    /* Initial gentle idle sway */
+    animation: idleSway 4s ease-in-out infinite;
+}
+
+@keyframes idleSway {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(1.5deg); }
+    75% { transform: rotate(-1.5deg); }
+}
+
+/* --- Lanyard String --- */
+.lanyard-string {
+    width: 6px;
+    height: 200px;
+    position: relative;
+    z-index: 1;
+}
+
+.lanyard-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Clip --- */
+.lanyard-clip {
+    position: relative;
+    width: 22px;
+    height: 28px;
+    z-index: 2;
+    margin-top: -2px;
+}
+
+.clip-body {
+    width: 22px;
+    height: 20px;
+    background: linear-gradient(180deg, #e8c547, #b8960f, #d4a017);
+    border-radius: 3px;
+    position: relative;
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.clip-body::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+}
+
+.clip-ring {
+    width: 14px;
+    height: 10px;
+    border: 2px solid #d4a017;
+    border-top: none;
+    border-radius: 0 0 7px 7px;
+    margin: 0 auto;
+    margin-top: -1px;
+}
+
+/* --- ID Card --- */
+.id-card {
+    position: relative;
+    width: 240px;
+    margin-top: 4px;
+    perspective: 1000px;
+}
+
+.id-card-inner {
+    width: 100%;
+    background: linear-gradient(170deg,
+        rgba(16, 22, 58, 0.95) 0%,
+        rgba(10, 14, 39, 0.98) 100%
+    );
+    border: 1px solid rgba(212, 160, 23, 0.25);
+    border-radius: 14px;
+    padding: 24px 20px 18px;
+    position: relative;
+    overflow: hidden;
+    /* 3D tilt base */
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(212, 160, 23, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle holographic sheen */
+.id-card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(212, 160, 23, 0.04),
+        rgba(255, 255, 255, 0.03),
+        transparent
+    );
+    transform: skewX(-15deg);
+    transition: left 0.8s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.id-card:hover .id-card-inner::before {
+    left: 150%;
+}
+
+/* Card hole for lanyard clip */
+.id-card-hole {
+    width: 16px;
+    height: 10px;
+    border-radius: 8px;
+    background: var(--navy-900);
+    border: 1px solid rgba(212, 160, 23, 0.15);
+    margin: -12px auto 14px;
+}
+
+/* Header bar */
+.id-card-header {
+    background: var(--gradient-gold);
+    margin: 0 -20px;
+    padding: 6px 20px;
+    margin-bottom: 16px;
+}
+
+.id-card-header-text {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--navy-900);
+    text-transform: uppercase;
+}
+
+/* ID card photo */
+.id-card-photo-wrapper {
+    width: 90px;
+    height: 110px;
+    margin: 0 auto 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(212, 160, 23, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.id-card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ID card text */
+.id-card-info {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.id-card-name {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+}
+
+.id-card-title {
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: var(--white-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Barcode */
+.id-card-barcode {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    height: 24px;
+    opacity: 0.3;
+}
+
+.barcode-line {
+    height: 100%;
+    background: var(--gold-500);
+    border-radius: 1px;
+}
+
+.barcode-line:nth-child(odd) {
+    height: 80%;
+}
+
+/* Card shadow — moves dynamically with the swing */
+.id-card-shadow {
+    position: absolute;
+    bottom: -20px;
+    left: 10%;
+    width: 80%;
+    height: 15px;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.35) 0%, transparent 70%);
+    filter: blur(4px);
+    border-radius: 50%;
+    transition: transform 0.1s linear, opacity 0.1s linear;
+    z-index: -1;
+}
+
+/* --- Scroll Hint --- */
+.scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 3;
+    animation: hintBounce 2s ease-in-out infinite, hintFadeIn 1s ease 1s forwards;
+    opacity: 0;
+}
+
+@keyframes hintFadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+
+.scroll-hint span {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--gold-500);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.scroll-arrow {
+    color: var(--gold-500);
+    opacity: 0.6;
+}
+
+
+/* ============================================
+   CONTENT SECTION — Profile Card
+   ============================================ */
+.content-section {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px 20px;
+    background: linear-gradient(180deg,
+        var(--navy-700) 0%,
+        var(--navy-800) 50%,
+        var(--navy-900) 100%
+    );
 }
 
 /* --- Profile Card --- */
@@ -482,8 +807,8 @@ body {
 
 /* --- Responsive --- */
 @media (max-width: 480px) {
-    body {
-        padding: 24px 16px;
+    .content-section {
+        padding: 40px 16px;
     }
 
     .profile-card {
@@ -515,6 +840,32 @@ body {
         width: 18px;
         height: 18px;
     }
+
+    /* ID Card responsive */
+    .lanyard-string {
+        height: 150px;
+    }
+
+    .id-card {
+        width: 200px;
+    }
+
+    .id-card-inner {
+        padding: 20px 16px 14px;
+    }
+
+    .id-card-photo-wrapper {
+        width: 70px;
+        height: 85px;
+    }
+
+    .id-card-name {
+        font-size: 0.75rem;
+    }
+
+    .id-card-header-text {
+        font-size: 0.5rem;
+    }
 }
 
 @media (max-width: 360px) {
@@ -532,6 +883,14 @@ body {
         font-size: 0.85rem;
         border-radius: 12px;
     }
+
+    .id-card {
+        width: 180px;
+    }
+
+    .lanyard-string {
+        height: 120px;
+    }
 }
 
 /* --- Accessibility: Reduced Motion --- */
@@ -540,5 +899,9 @@ body {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+
+    .lanyard-assembly {
+        animation: none !important;
     }
 }
